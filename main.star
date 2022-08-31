@@ -14,7 +14,7 @@ DEFAULT_TEXT_COLOR = "#FFFFFF"
 DEFAULT_BACKGROUND_COLOR = "#00008B"
 DEFAULT_NAME = "John Smith"
 DEFAULT_DEPARTMENT = "Technology"
-DEFAULT_PRONOUNS = "They/Them"
+DEFAULT_PRONOUNS = ""
 
 def main(config):
     text_color = config.str("text_color", DEFAULT_TEXT_COLOR)
@@ -74,25 +74,25 @@ def get_schema():
                 id = "department",
                 name = "Department",
                 desc = "Enter your department.",
-                icon = "user",
+                icon = "briefcase",
             ),
             schema.Text(
                 id = "pronouns",
                 name = "Pronouns",
                 desc = "Enter your pronouns.",
-                icon = "user",
+                icon = "peopleArrowsLeftRight",
             ),
             schema.Text(
                 id = "text_color",
                 name = "Text Color",
                 desc = "Enter a valid hex string: #FFFFFF",
-                icon = "user",
+                icon = "paintbrush",
             ),
             schema.Text(
                 id = "background_color",
                 name = "Background Color",
                 desc = "Enter a valid hex string: #00008B",
-                icon = "user",
+                icon = "fillDrip",
             ),
         ],
     )
