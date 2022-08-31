@@ -7,50 +7,54 @@ Author: Brian Bell
 
 load("encoding/base64.star", "base64")
 load("render.star", "render")
+load("re.star", "re")
 load("schema.star", "schema")
 
-DEFAULT_NAME = "John"
+DEFAULT_TEXT_COLOR = "#FFFFFF"
+DEFAULT_BACKGROUND_COLOR = "#00008B"
+DEFAULT_NAME = "John Smith"
 DEFAULT_DEPARTMENT = "Technology"
 DEFAULT_PRONOUNS = "They/Them"
 
 def main(config):
+    text_color = config.str("text_color", DEFAULT_TEXT_COLOR)
+    if re.findall("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", text_color) == ():
+        text_color = DEFAULT_TEXT_COLOR
+    background_color = config.str("background_color", DEFAULT_BACKGROUND_COLOR)
+    if re.findall("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", background_color) == ():
+        background_color = DEFAULT_BACKGROUND_COLOR
     name = config.str("name", DEFAULT_NAME)
     department = config.str("department", DEFAULT_DEPARTMENT)
     pronouns = config.str("pronouns", DEFAULT_PRONOUNS)
     return render.Root(
         delay = 150,
-        child = render.Row(
+        child = render.Column(
+            expanded = True,
+            cross_align = "center",
             children = [
-                render.Column(
+                render.Row(
                     expanded = True,
                     main_align = "center",
+                    cross_align = "center",
                     children = [
                         render.Box(
-                            color = "#7DD3F2",
-                            width = 5,
+                            color = background_color,
+                            height = 15,
+                            child = render.Text(content = name, font = "6x13", color = text_color),
                         ),
-                    ],
+                    ]
                 ),
                 render.Padding(
-                    pad = (1, 0, 0, 0),
-                    child = render.Column(
-                        expanded = True,
-                        main_align = "space_evenly",
-                        children = [
-                            render.Marquee(
-                                width = 58,
-                                child = render.Text(content = name, font = "6x13"),
-                            ),
-                            render.Marquee(
-                                width = 58,
-                                child = render.Text(content = department),
-                            ),
-                            render.Marquee(
-                                width = 58,
-                                child = render.Text(content = pronouns, font = "tom-thumb"),
-                            ),
-                        ],
-                    ),
+                    pad = (0, 0, 0, 1),
+                    child = render.Text(content = department),
+                ),
+                render.Box(
+                    color = background_color,
+                    height = 1,
+                ),
+                render.Padding(
+                    pad = (0, 1, 0, 0),
+                    child = render.Text(content = pronouns, font = "tom-thumb"),
                 ),
             ],
         ),
@@ -76,6 +80,18 @@ def get_schema():
                 id = "pronouns",
                 name = "Pronouns",
                 desc = "Enter your pronouns.",
+                icon = "user",
+            ),
+            schema.Text(
+                id = "text_color",
+                name = "Text Color",
+                desc = "Enter a valid hex string: #FFFFFF",
+                icon = "user",
+            ),
+            schema.Text(
+                id = "background_color",
+                name = "Background Color",
+                desc = "Enter a valid hex string: #00008B",
                 icon = "user",
             ),
         ],
