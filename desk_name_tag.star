@@ -1,5 +1,5 @@
 """
-Applet: Office Name Tag
+Applet: Desk Name Tag
 Summary: Show coworkers basic information about you.
 Description: Displays basic employee information.
 Author: Brian Bell
